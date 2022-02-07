@@ -9,6 +9,7 @@ import java.util.List;
 
 @Repository
 public interface TicketRepository extends JpaRepository<Ticket,Long> {
+
     List<Ticket> findByUserId(Long findUserById);
 
     List<Ticket> findByTicketStatus(boolean ticketStatus);

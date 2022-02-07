@@ -64,6 +64,7 @@ public class TicketController {
         }).orElseThrow(() -> new Exception("Not found User with id = " + userId));
         return new ResponseEntity<>(ticket, HttpStatus.CREATED);
     }
+
     @PutMapping("/tickets/{id}")
     public ResponseEntity<Ticket> updateTicket(@PathVariable("id") long id, @RequestBody Ticket ticketRequest) throws Exception {
         Ticket ticket = ticketRepository.findById(id)
@@ -72,11 +73,13 @@ public class TicketController {
         ticket.setTicketStatus(ticketRequest.isTicketStatus());
         return new ResponseEntity<Ticket>(ticketRepository.save(ticket), HttpStatus.OK);
     }
+
     @DeleteMapping("/tickets/{id}")
     public ResponseEntity<HttpStatus> deleteTicket(@PathVariable("id") long id) {
         ticketRepository.deleteById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
     @DeleteMapping("/users/{userId}/tickets")
     public ResponseEntity<List<Ticket>> deleteAllTicketsOfUser(@PathVariable(value = "userId") Long userId) throws Exception {
         if (!userRepository.existsById(userId)) {
@@ -85,4 +88,5 @@ public class TicketController {
         ticketRepository.deleteByUserId(userId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
 }
